@@ -91,7 +91,7 @@ _Spotify user authentication_
 ![Search Page](assets/search.png)
 _The search page allows users to find songs by title or artist._
 
-![Track Details](assets/results.png)
+![Track Details](assets/result.png)
 _The track details page displays the album cover, romanized lyrics, and an embedded YouTube video._
 
 ## License
