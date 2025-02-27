@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song Lyrics Romanizer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header h1 {
+            margin-bottom: 0;
+        }
+        .header p {
+            font-size: 0.9rem;
+            margin-top: 0;
+        }
+        .search-container {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .form-control {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 25px;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 8px rgba(40, 167, 69, 0.25);
+        }
+        .btn-success {
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            margin-left: 10px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        .loader {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .search-results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .list-group-item {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+        .list-group-item:hover {
+            background-color: #f0f0f0;
+        }
+        .alert {
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <h1>Song Lyrics Romanizer</h1>
+        <p>by Biligsaikhan Khurtsbayar</p>
+    </div>
+
+    <!-- Logout Button -->
+    <a href="{{ url_for('logout') }}" class="btn btn-danger logout-btn">Logout</a>
+
+    <!-- Search Form -->
+    <div class="container search-container">
+        <form method="get" id="search-form" class="d-flex align-items-center">
+            <input type="text" name="query" class="form-control" placeholder="Search for a song..." required>
+            <button type="submit" class="btn btn-success">Search</button>
+        </form>
+    </div>
+
+    <!-- Loader for Search Results -->
+    <div class="loader" id="loader">
+        <div class="spinner-border text-success" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Display Search Results -->
+    <div class="container search-results">
+        {% if track_info %}
+        <h3>Search Results:</h3>
+        <ul class="list-group">
+            {% for track in track_info %}
+            <li class="list-group-item">
+                <a href="{{ url_for('track_details', track_id=track.track_id) }}">
+                    <strong>{{ track.song_title }}</strong> - {{ track.artist_name }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% elif message %}
+        <div class="alert alert-warning">{{ message }}</div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript for Loader -->
+    <script>
+        // Handle form submission and display loader
+        const searchForm = document.getElementById("search-form");
+        const loader = document.getElementById("loader");
+
+        searchForm.addEventListener("submit", function () {
+            loader.style.display = "block"; // Show the loader
+        });
+    </script>
+</body>
+</html>
