@@ -101,7 +101,7 @@ This project is fully containerized, making local setup incredibly simple and co
 ### Step 1: Clone the Repository
 First, clone the project to your local machine.
 ```bash
-git clone (https://github.com/biligee23/Spotify_romanizer.git)
+git clone https://github.com/biligee23/Spotify_romanizer.git
 cd spotify-romanizer
 ```
 
