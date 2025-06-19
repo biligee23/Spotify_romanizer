@@ -8,8 +8,8 @@
   </p>
   <br>
   <p>
-    <a href="https://creativecommons.org/publicdomain/zero/1.0/">
-      <img src="https://licensebuttons.net/p/zero/1.0/88x31.png" alt="CC0" />
+    <a href="https://www.gnu.org/licenses/gpl-3.0">
+      <img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="License: GPL v3" />
     </a>
   </p>
 </div>
@@ -42,7 +42,7 @@ The entire application is built with a focus on performance and user experience,
 
 ### 🎨 Dynamic & Responsive User Experience
 - **Asynchronous Skeleton Loading:** Pages load instantly with a polished "skeleton" UI. The lyrics, video, and translation then populate seamlessly as the data is fetched by background Celery workers.
-- **Real-Time UI Updates:** All major actions—favoriting a song, adding to a playlist, reordering tracks—happen instantly on the page without requiring a full refresh, creating a smooth, modern SPA-like feel.
+- **Real-Time UI Updates:** All major actions—favoriting a song, adding to a playlist, reordering tracks—happen instantly on the page without requiring a full page refresh, creating a smooth, modern SPA-like feel.
 - **Dynamic Theming:** The track and artist pages feature a beautiful, dynamic background gradient that is generated from the dominant colors of the album or artist artwork.
 - **Polished Hover Effects:** Album art comes to life with a stylish, theme-aware "duotone" hover effect.
 
@@ -53,7 +53,7 @@ The entire application is built with a focus on performance and user experience,
 
 ### 🎶 Advanced Playlist Tools
 - **Full Playlist Management:** View, rename, and delete your Spotify playlists directly from the app.
-- **Duplicate-Free Adding:** When adding songs to an existing playlist, the app automatically detects and skips any tracks that are already present.
+- **Duplicate-Free Adding:** When adding songs to an existing playlist, the app automatically checks for and skips any tracks that are already present.
 - **Asynchronous Creation:** New playlists are created in the background, so your UI is never blocked.
 - **Drag-and-Drop Reordering:**
     - **Tracks:** Reorder tracks within a playlist, and the changes are instantly saved to your Spotify account.
@@ -62,9 +62,24 @@ The entire application is built with a focus on performance and user experience,
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## 🖼️ Visual Showcase
 
-This project is fully containerized with Docker and designed with a modern, scalable architecture.
+<table>
+  <tr>
+    <td width="50%">
+      <center><strong>Seamless Playlist Management</strong></center>
+      <img src="assets/demo-playlist-management.gif" alt="Playlist Management Demo" width="100%">
+    </td>
+    <td width="50%">
+      <center><strong>Efficient Bulk Actions</strong></center>
+      <img src="assets/demo-bulk-actions.gif" alt="Bulk Actions Demo" width="100%">
+    </td>
+  </tr>
+</table>
+
+---
+
+## 🛠️ Tech Stack & Architecture
 
 -   **Backend:** Python, Flask
 -   **Asynchronous Tasks:** Celery with a Redis message broker
@@ -72,6 +87,8 @@ This project is fully containerized with Docker and designed with a modern, scal
 -   **Frontend:** Vanilla JavaScript (ES6+), HTML5, CSS3
 -   **APIs:** Spotify API, Genius API (via `lyricsgenius`), YouTube Data API
 -   **Containerization:** Docker, Docker Compose
+
+The application is architected with a clean separation of concerns, using a service-oriented pattern on the back-end and a modular, event-driven approach on the front-end. The use of Celery workers to offload all slow network requests ensures the main Flask application remains lightweight and highly responsive.
 
 ---
 
@@ -89,7 +106,7 @@ This project is fully containerized, making local setup incredibly simple and co
 **1. Clone the Repository**
 
 ```bash
-git clone https://github.com/your-username/spotify-romanizer.git
+git clone https://github.com/your-github-username/spotify-romanizer.git
 cd spotify-romanizer
 ```
 
@@ -133,6 +150,17 @@ docker-compose down
 
 ---
 
+## ✍️ Original Work & Licensing Philosophy
+
+This project was conceived and developed from the ground up as a portfolio piece to showcase modern web application architecture and a high-quality user experience. All of the core application code in the `src/` directory is my own original work.
+
+The choice of the **GNU GPLv3 license** is a deliberate one, made to reflect the following principles:
+1.  **Freedom to Learn:** I strongly believe in the open-source ethos of sharing knowledge. Anyone is free to clone, run, and study this codebase to learn from its patterns and implementation.
+2.  **Protection from Commercialization:** The "copyleft" nature of the GPLv3 ensures that while this project is open for all to see and learn from, it cannot be absorbed into a closed-source, proprietary commercial product. If any company uses this code as part of a distributed product, they must release the full source code of their product under the same terms.
+3.  **Sharing is Caring:** If you adapt this code to create and distribute your own cool project, you are required to share your source code under the same license, ensuring the community continues to benefit.
+
+---
+
 ## 🙏 Acknowledgements
 
 This project would not be possible without the incredible services and APIs provided by the following platforms:
@@ -145,8 +173,6 @@ This project would not be possible without the incredible services and APIs prov
 
 ## 📜 License
 
-This project is dedicated to the public domain under the **CC0 1.0 Universal** license.
+This project is licensed under the **GNU General Public License v3.0**.
 
-[![CC0](https://licensebuttons.net/p/zero/1.0/88x31.png)](https://creativecommons.org/publicdomain/zero/1.0/)
-
-You are free to use, modify, distribute, and build upon this work for any purpose, including commercial, without any restrictions. See the [LICENSE](LICENSE) file for more details.
+See the [LICENSE](LICENSE) file for the full legal text.
