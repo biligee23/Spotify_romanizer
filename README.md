@@ -42,7 +42,7 @@ The entire application is built with a focus on performance and user experience,
 
 ### 🎨 Dynamic & Responsive User Experience
 - **Asynchronous Skeleton Loading:** Pages load instantly with a polished "skeleton" UI. The lyrics, video, and translation then populate seamlessly as the data is fetched by background Celery workers.
-- **Real-Time UI Updates:** All major actions (favoriting a song, adding to a playlist, reordering tracks) happen instantly on the page without requiring a full page refresh, creating a smooth, modern SPA-like feel.
+- **Real-Time UI Updates:** All major actions—favoriting a song, adding to a playlist, reordering tracks—happen instantly on the page without requiring a full page reloads, creating a smooth, modern SPA-like feel.
 - **Dynamic Theming:** The track and artist pages feature a beautiful, dynamic background gradient that is generated from the dominant colors of the album or artist artwork.
 - **Polished Hover Effects:** Album art comes to life with a stylish, theme-aware "duotone" hover effect.
 
@@ -88,65 +88,55 @@ The entire application is built with a focus on performance and user experience,
 -   **APIs:** Spotify API, Genius API (via `lyricsgenius`), YouTube Data API
 -   **Containerization:** Docker, Docker Compose
 
-The application is architected with a clean separation of concerns, using a service-oriented pattern on the back-end and a modular, event-driven approach on the front-end. The use of Celery workers to offload all slow network requests ensures the main Flask application remains lightweight and highly responsive.
-
 ---
 
-## 🚀 Getting Started
+## ⚙️ Local Setup & Installation
 
 This project is fully containerized, making local setup incredibly simple and consistent.
 
 ### Prerequisites
+- [Docker](https://www.docker.com/products/docker-desktop/) & Docker Compose
+- Git
 
--   [Docker](https://www.docker.com/products/docker-desktop/) & Docker Compose
--   Git
-
-### Setup Instructions
-
-**1. Clone the Repository**
-
+### Step 1: Clone the Repository
+First, clone the project to your local machine.
 ```bash
 git clone https://github.com/your-github-username/spotify-romanizer.git
 cd spotify-romanizer
 ```
 
-**2. Create Your Environment File**
-
-The application requires API keys from Spotify, Genius, and YouTube. A template is provided to make this easy.
-
--   **Copy the template file:**
+### Step 2: Configure Your API Keys (Crucial Step)
+This application requires credentials from Spotify, Genius, and YouTube to function.
+1.  **Create your `.env` file** by copying the provided template. This file is where you will store your secret keys.
     ```bash
     cp .env.template .env
     ```
--   **Edit the `.env` file:** Open the new `.env` file in your favorite text editor.
--   **Fill in your keys:** Follow the instructions inside the file to get your API credentials from the respective developer portals and paste them into the file.
--   **Crucially**, ensure the `SPOTIFY_REDIRECT_URI` in your `.env` file (`http://localhost:5000/callback` by default) is added to the list of "Redirect URIs" in your application's settings on the Spotify Developer Dashboard.
+2.  **Get Your Credentials:**
+    -   **Spotify:** Go to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/) to create an app and get your Client ID and Secret.
+    -   **Genius:** Go to the [Genius API page](https://genius.com/api-clients) to create a client and get your Access Token.
+    -   **YouTube:** Go to the [Google Cloud Console](https://console.cloud.google.com/apis/credentials) to create a project, enable the "YouTube Data API v3", and get an API Key.
+3.  **Fill in the `.env` file:** Open the `.env` file you just created and paste in your keys.
+4.  **Set Spotify Redirect URI:** In your Spotify Developer Dashboard, you **must** add `http://localhost:5000/callback` to the list of "Redirect URIs" in your app's settings.
 
-**3. Build and Run with Docker Compose**
-
-This single command will build the Docker images, start the containers, and run the entire application stack.
-
+### Step 3: Build & Run the Application
+With your configuration in place, this single command will build and run the entire application stack.
 ```bash
-docker-compose up --build```
+docker-compose up --build
+```
+- The `--build` flag is only needed the first time or after changing dependencies. For subsequent runs, you can just use `docker-compose up`.
+- You will see logs from the `web`, `worker`, and `redis` services. Wait for them to stabilize.
 
--   The `--build` flag is only needed the first time or after changing dependencies. For subsequent runs, you can just use `docker-compose up`.
--   You will see logs from three services (`web`, `worker`, `redis`) in your terminal. Wait until they are all running and stable.
-
-**4. Access the Application**
-
+### Step 4: Access Spotify Romanizer
 Once the containers are running, open your web browser and navigate to:
-
 ### [http://localhost:5000](http://localhost:5000)
-
-You should be greeted by the Spotify Romanizer login page. Enjoy!
+You should be greeted by the login page. Enjoy the application!
 
 ### Stopping the Application
-
-To stop all the running containers, press `Ctrl+C` in the terminal where `docker-compose` is running. To remove the containers and network entirely, run:
-
-```bash
-docker-compose down
-```
+- To stop the running containers, press `Ctrl+C` in the terminal.
+- To remove the containers and all associated network resources, run:
+  ```bash
+  docker-compose down
+  ```
 
 ---
 
