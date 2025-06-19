@@ -102,7 +102,7 @@ This project is fully containerized, making local setup incredibly simple and co
 First, clone the project to your local machine.
 ```bash
 git clone https://github.com/biligee23/Spotify_romanizer.git
-cd spotify-romanizer
+cd Spotify-romanizer
 ```
 
 ### Step 2: Configure Your API Keys (Crucial Step)
