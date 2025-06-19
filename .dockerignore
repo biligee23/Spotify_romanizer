@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+.env
+.git/
+.vscode/
+assets/
+tests/
+node_modules/
+*.md
+.DS_Store

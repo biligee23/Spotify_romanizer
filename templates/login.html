@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Spotify Romanizer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+    </div>
+    <div class="container">
+        <div class="main-content">
+            <h1 class="title">Spotify Romanizer</h1>
+            <p class="subtitle">Instantly get Romanized, Original, and Translated lyrics for your favorite Japanese songs on Spotify.</p>
+            
+            <div class="features">
+                <div class="feature-item">🔎 Search for any song</div>
+                <div class="feature-item">🇯🇵 Get accurate Romaji</div>
+                <div class="feature-item">🇬🇧 View English translations</div>
+                <div class="feature-item">➕ Manage your playlists</div>
+            </div>
+
+            <a href="{{ url_for('main.login') }}" class="login-button">
+                <img src="{{ url_for('static', filename='img/spotify_logo.png') }}" alt="Spotify Logo" class="spotify-logo">
+                Login with Spotify
+            </a>
+
+            <div class="demo-section">
+                <h3 class="demo-title">See it in Action</h3>
+                <!-- EMBED YOUR YOUTUBE/VIMEO VIDEO HERE -->
+                <!-- Replace the src with your video's embed link -->
+                <div class="video-container">
+                    <iframe 
+                        width="560" 
+                        height="315" 
+                        src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <p class="demo-note">
+                    <strong>Note for Reviewers:</strong> Due to Spotify's API policies, this app is in Development Mode. Live login is restricted to registered users. Please view the video demo above to see the full functionality.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

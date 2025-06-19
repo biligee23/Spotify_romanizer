@@ -1,0 +1,36 @@
+<div class="list-group-item recently-viewed-item" 
+     data-track-url="{{ url_for('main.track_details', track_id=song.track_id) }}">
+    <div class="selection-box" data-role="child-link">
+        <input type="checkbox" class="song-checkbox" data-track-id="{{ song.track_id }}">
+    </div>
+    <a href="{{ url_for('main.album_page', album_id=song.album_id) if song.album_id else '#' }}" 
+       class="recent-album-art-link" data-role="child-link">
+        <img src="{{ song.image_url or url_for('static', filename='img/placeholder.png') }}" 
+             alt="Album art for {{ song.title }}" class="search-result-img">
+        <div class="album-chip-indicator">
+            💿
+        </div>
+    </a>
+    <div class="recent-song-info">
+        <h5 class="recent-track-title">{{ song.title }}</h5>
+        <a href="{{ url_for('main.artist_page', artist_id=song.artist_id) if song.artist_id else '#' }}" 
+           class="recent-artist-link" data-role="child-link">
+            <span class="artist-icon">👤</span>
+            {{ song.artist }}
+        </a>
+    </div>
+    <div class="view-info text-end">
+        {% if song.access_count %}
+        <span class="view-count">{{ song.access_count }} view{{ 's' if song.access_count > 1 else '' }}</span>
+        {% endif %}
+        <small class="view-date">Last seen: {{ song.cached_at.split('T')[0] if song.cached_at else 'N/A' }}</small>
+    </div>
+    <button class="btn-icon btn-favorite {% if song.is_favorite %}is-favorite{% endif %}" 
+            data-cache-key="{{ song.cache_key }}" 
+            title="Toggle favorite"
+            data-role="child-link">
+        <i class="fa-solid fa-star solid-star"></i>
+        <i class="fa-regular fa-star regular-star"></i>
+    </button>
+    <button class="btn-icon btn-remove-cache" data-cache-key="{{ song.cache_key }}" title="Remove from history">×</button>
+</div>

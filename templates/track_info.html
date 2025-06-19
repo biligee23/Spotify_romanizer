@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Information -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ track_data.song_title }} - {{ track_data.artist_name }}</title>
+
+    <!-- External Stylesheets -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts for typography (Poppins for UI, Noto Sans JP for Japanese text) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/track_info.css') }}">
+
+    <!-- External Scripts (defer loading until after document parsing) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js" defer></script>
+</head>
+
+<body class="dynamic-bg" data-track-id="{{ track_data.track_id }}">
+    <div id="notification-container"></div>
+
+    <!-- Hero Header Section -->
+    <div class="hero-header">
+        <a href="{{ url_for('main.search') }}" class="btn-back">Back</a>
+        <div class="title-container">
+            <h2>{{ track_data.song_title }}</h2>
+            {% if track_data.artist_id %}
+            <h3>
+                <a href="{{ url_for('main.artist_page', artist_id=track_data.artist_id) }}" class="artist-link">{{ track_data.artist_name }}</a>
+            </h3>
+            {% else %}
+            <h3>{{ track_data.artist_name }}</h3>
+            {% endif %}
+        </div>
+    </div>
+   
+    <!-- Main Content Section -->
+    <div class="container main-container content-section themed-background">
+        <div class="row">
+            <!-- Album Art Section (Left Column) -->
+            <div class="col-lg-4 text-center mb-4">
+                <!-- UPDATED: Removed mb-4 from the link as the parent div handles spacing -->
+                <a href="{{ url_for('main.album_page', album_id=track_data.album_id) }}" class="album-art-link">
+                    <img src="{{ track_data.image_url }}" 
+                        alt="Album art for {{ track_data.song_title }}" 
+                        class="track-image" 
+                        crossorigin="anonymous">
+                    <div class="album-art-overlay">
+                        <span class="overlay-icon">💿</span>
+                        <span class="overlay-text">View Album</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Details Section (Right Column) -->
+            <div class="col-lg-8">
+                <!-- YouTube Video Embed Container -->
+                <div id="youtube-container" 
+                     class="video-container {% if not track_data.youtube_url %}skeleton skeleton-block{% endif %}"
+                     data-is-loading="{{ 'true' if not track_data.youtube_url else 'false' }}">
+                    {% if track_data.youtube_url %}
+                    <iframe src="{{ track_data.youtube_url }}" 
+                            title="YouTube video player for {{ track_data.song_title }}"
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                    {% endif %}
+                </div>
+
+                <!-- Lyrics Display Container -->
+                <div id="lyrics-display-container" 
+                     class="lyrics-container"
+                     data-is-loading="{{ 'true' if 'loading' in track_data.original_lyrics|lower else 'false' }}">
+                    <div class="lyrics-header">
+                        <div class="lyrics-tabs">
+                            <button id="original-tab" class="lyrics-tab active" data-target="original-lyrics-container">Original</button>
+                            <button id="romanized-tab" class="lyrics-tab" data-target="romanized-lyrics-container">Romanized</button>
+                            
+                            {% set translation_status = track_data.translated_lyrics|lower %}
+                            {% set is_loading = 'loading' in translation_status or 'in progress' in translation_status %}
+                            {% set is_unavailable = 'not available' in translation_status or 'failed' in translation_status %}
+                            
+                            <button id="english-tab" 
+                                    class="lyrics-tab {% if is_unavailable %}d-none{% endif %}" 
+                                    data-target="english-lyrics-container" 
+                                    {% if is_loading %}disabled{% endif %}>
+                                English
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="original-lyrics-container" class="lyrics-content active">
+                        <div class="lyrics original-lyrics" id="original-lyrics-text" data-loading="{{ 'true' if 'loading' in track_data.original_lyrics|lower else 'false' }}">
+                            {%- if 'loading' in track_data.original_lyrics|lower -%}
+                                <div class="skeleton skeleton-text" style="width: 90%;"></div>
+                                <div class="skeleton skeleton-text" style="width: 70%;"></div>
+                                <div class="skeleton skeleton-text" style="width: 80%;"></div>
+                                <br>
+                                <div class="skeleton skeleton-text" style="width: 60%;"></div>
+                                <div class="skeleton skeleton-text" style="width: 85%;"></div>
+                            {%- else -%}
+                                {{- track_data.original_lyrics -}}
+                            {%- endif -%}
+                        </div>
+                    </div>
+
+                    <div id="romanized-lyrics-container" class="lyrics-content">
+                        <div class="lyrics" id="romanized-lyrics-text" data-loading="{{ 'true' if 'loading' in track_data.romanized_lyrics|lower else 'false' }}">
+                            {%- if 'loading' in track_data.romanized_lyrics|lower -%}
+                                <div class="skeleton skeleton-text" style="width: 90%;"></div>
+                                <div class="skeleton skeleton-text" style="width: 70%;"></div>
+                                <div class="skeleton skeleton-text" style="width: 80%;"></div>
+                            {%- else -%}
+                                {{- track_data.romanized_lyrics -}}
+                            {%- endif -%}
+                        </div>
+                    </div>
+
+                    <div id="english-lyrics-container" class="lyrics-content">
+                        <div class="lyrics" id="english-lyrics-text" data-loading="{{ 'true' if 'loading' in track_data.translated_lyrics|lower else 'false' }}">
+                             {%- if 'loading' in track_data.translated_lyrics|lower or 'in progress' in track_data.translated_lyrics|lower -%}
+                                <div class="skeleton skeleton-text" style="width: 90%;"></div>
+                                <div class="skeleton skeleton-text" style="width: 70%;"></div>
+                                <div class="skeleton skeleton-text" style="width: 80%;"></div>
+                            {%- else -%}
+                                {{- track_data.translated_lyrics -}}
+                            {%- endif -%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application Logic Scripts -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/track_info_page.js') }}"></script>
+</body>
+</html>

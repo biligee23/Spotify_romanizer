@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ album_info.name }} - Spotify Romanizer</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js" defer></script>
+</head>
+<body class="dynamic-bg">
+    <div id="notification-container"></div>
+    <div class="container-fluid px-0">
+        <a href="{{ url_for('main.search') }}" class="logout-btn">Back to Search</a>
+
+        <header class="entity-header" style="background-image: url('{{ album_info.image_url }}');">
+            <div class="entity-header-overlay">
+                <div class="container entity-header-content">
+                    <img src="{{ album_info.image_url }}" alt="Cover for {{ album_info.name }}" class="entity-image-main">
+                    <div class="entity-info">
+                        <h1 class="entity-title">{{ album_info.name }}</h1>
+                        <div class="album-meta-info">
+                            <a href="{{ url_for('main.artist_page', artist_id=album_info.artist_id) }}" class="album-artist-link">{{ album_info.artist_name }}</a>
+                            <span>•</span>
+                            <span>{{ album_info.release_date.split('-')[0] }}</span>
+                            <!-- NEW: Display total album length -->
+                            <span>•</span>
+                            <span>{{ tracks|length }} songs, {{ album_info.total_duration_formatted }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <main class="container themed-background">
+            <div class="album-tracks-container mt-4">
+                <div class="list-group">
+                    {% for track in tracks %}
+                    <a href="{{ url_for('main.track_details', track_id=track.track_id) }}" 
+                       class="list-group-item list-group-item-action d-flex align-items-center">
+                        <div class="track-number">{{ loop.index }}</div>
+                        <div class="flex-grow-1">
+                            <h5 class="mb-1">{{ track.title }}</h5>
+                            <p class="mb-0 text-muted">{{ track.artist }}</p>
+                        </div>
+                        <span class="play-icon" aria-hidden="true">►</span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <img src="{{ album_info.image_url }}" id="color-thief-img" style="display: none;" crossorigin="anonymous">
+
+    <script src="{{ url_for('static', filename='js/entity_page.js') }}"></script>
+</body>
+</html>

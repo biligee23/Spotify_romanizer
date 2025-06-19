@@ -1,0 +1,467 @@
+/* ==============================
+   ROOT VARIABLES AND GLOBAL STYLES
+   ============================== */
+:root {
+    --primary-color: #bb86fc;   /* Fallback color for primary theme */
+    --secondary-color: #03dac6; /* Fallback color for secondary theme */
+    --album-dominant-color: var(--primary-color); /* Fallback for the dominant color */
+    --bg-dark: #121212;
+    --bg-darker: #0f0c29;
+    --transition: all 0.3s ease;
+    --title-text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px var(--primary-color);
+}
+
+html {
+    font-size: 16px;
+}
+@media (max-width: 992px) { html { font-size: 15px; } }
+@media (max-width: 768px) { html { font-size: 14px; } }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-dark);
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800"%3E%3Cg fill="none" stroke="%23222" stroke-width="1"%3E%3Cpath d="M-500 75c0 0 125-30 250-30S0 75 0 75s125 30 250 30s250-30 250-30s125-30 250-30S1000 75 1000 75"/%3E%3Cpath d="M-500 125c0 0 125-30 250-30S0 125 0 125s125 30 250 30s250-30 250-30s125-30 250-30S1000 125 1000 125"/%3E%3Cpath d="M-500 175c0 0 125-30 250-30S0 175 0 175s125 30 250 30s250-30 250-30s125-30 250-30S1000 175 1000 175"/%3E%3Cpath d="M-500 225c0 0 125-30 250-30S0 225 0 225s125 30 250 30s250-30 250-30s125-30 250-30S1000 225 1000 225"/%3E%3Cpath d="M-500 275c0 0 125-30 250-30S0 275 0 275s125 30 250 30s250-30 250-30s125-30 250-30S1000 275 1000 275"/%3E%3Cpath d="M-500 325c0 0 125-30 250-30S0 325 0 325s125 30 250 30s250-30 250-30s125-30 250-30S1000 325 1000 325"/%3E%3Cpath d="M-500 375c0 0 125-30 250-30S0 375 0 375s125 30 250 30s250-30 250-30s125-30 250-30S1000 375 1000 375"/%3E%3Cpath d="M-500 425c0 0 125-30 250-30S0 425 0 425s125 30 250 30s250-30 250-30s125-30 250-30S1000 425 1000 425"/%3E%3Cpath d="M-500 475c0 0 125-30 250-30S0 475 0 475s125 30 250 30s250-30 250-30s125-30 250-30S1000 475 1000 475"/%3E%3Cpath d="M-500 525c0 0 125-30 250-30S0 525 0 525s125 30 250 30s250-30 250-30s125-30 250-30S1000 525 1000 525"/%3E%3Cpath d="M-500 575c0 0 125-30 250-30S0 575 0 575s125 30 250 30s250-30 250-30s125-30 250-30S1000 575 1000 575"/%3E%3Cpath d="M-500 625c0 0 125-30 250-30S0 625 0 625s125 30 250 30s250-30 250-30s125-30 250-30S1000 625 1000 625"/%3E%3Cpath d="M-500 675c0 0 125-30 250-30S0 675 0 675s125 30 250 30s250-30 250-30s125-30 250-30S1000 675 1000 675"/%3E%3C/g%3E%3C/svg%3E');
+    color: #ffffff;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* ==============================
+   HERO HEADER SECTION
+   ============================== */
+.hero-header {
+    background: linear-gradient(125deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+    background-size: 300% 300%;
+    padding: 2.5rem 1.5rem;
+    border-radius: 0 0 2rem 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    animation: gradientMove 15s ease infinite;
+    transition: background 0.5s ease;
+}
+
+.hero-header::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, 
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.05) 30%,
+        transparent 70%);
+    transform-origin: center center;
+    transform: translate(-50%, -50%);
+    animation: shine 8s linear infinite;
+    animation-delay: -2s;
+}
+
+.title-container {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.hero-header h2 {
+    font-weight: 800;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: var(--title-text-shadow);
+    animation: titlePulse 4s ease infinite;
+    transition: color 0.5s ease, text-shadow 0.5s ease;
+}
+
+.hero-header h3 {
+    font-size: 1.25rem;
+    font-weight: 400;
+    opacity: 0.9;
+    transition: color 0.5s ease;
+}
+
+.artist-link {
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+    padding: 0.2rem 0;
+}
+
+.artist-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+}
+
+.artist-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+
+/* ==============================
+   BUTTONS
+   ============================== */
+
+.btn-back {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(5px);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: var(--transition);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+.btn-back:hover {
+    transform: translateY(-2px);
+    background: var(--primary-color);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3); 
+}
+
+
+/* ==============================
+   MAIN CONTENT SECTION
+   ============================== */
+
+.main-container {
+    background: rgba(30, 30, 47, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2), 0 0 25px rgba(187, 134, 252, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 1;
+    margin-bottom: 2rem;
+}
+
+.main-container::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+    border-radius: 21px;
+    z-index: -1;
+    animation: borderGlow 3s linear infinite;
+}
+
+
+/* ==============================
+   IMAGES AND VIDEOS
+   ============================== */
+
+/* UPDATED: Refactored for Dynamic Duotone Hover Effect */
+.album-art-link {
+    display: inline-block;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    line-height: 0;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.album-art-link:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+}
+
+.track-image {
+    width: 100%;
+    max-width: 300px;
+    display: block;
+    border-radius: 15px;
+    /* The image itself no longer needs a transition */
+}
+
+/* Color tint layer */
+.album-art-link::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: var(--album-dominant-color);
+    mix-blend-mode: color; /* 'color', 'hue', 'saturation', 'luminosity' are good options */
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+/* Darkening layer for contrast */
+.album-art-link::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.album-art-link:hover::before,
+.album-art-link:hover::after {
+    opacity: 1;
+}
+
+.album-art-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 2; /* Ensure it's on top of the color/dark layers */
+}
+
+.album-art-link:hover .album-art-overlay {
+    opacity: 1;
+}
+
+.overlay-icon {
+    font-size: 2.5rem;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.overlay-text {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; 
+    height: 0;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    margin-bottom: 2rem;
+}
+
+.video-container.skeleton {
+    padding-bottom: 0;
+    height: 200px;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+}
+
+/* ==============================
+   LYRICS SECTION
+   ============================== */
+.lyrics-container {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.lyrics-header {
+    background: rgba(0, 0, 0, 0.1);
+    padding: 0.5rem;
+    flex-shrink: 0;
+}
+
+.lyrics-tabs { display: flex; }
+
+.lyrics-tab {
+    background: none;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.6);
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.lyrics-tab:not(.active):hover {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.lyrics-tab.active {
+    color: #fff;
+    font-weight: 600;
+}
+
+.lyrics-tab:disabled {
+    color: rgba(255, 255, 255, 0.3);
+    cursor: not-allowed;
+}
+
+.lyrics-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+.lyrics-content {
+    display: none;
+    padding: 1.5rem;
+    flex-grow: 1;
+    max-height: 50vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--secondary-color) rgba(0,0,0,0.1);
+}
+.lyrics-content::-webkit-scrollbar { width: 8px; }
+.lyrics-content::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+.lyrics-content::-webkit-scrollbar-thumb {
+    background-color: var(--secondary-color);
+    border-radius: 4px;
+}
+.lyrics-content::-webkit-scrollbar-thumb:hover { background-color: var(--primary-color); }
+
+.lyrics-content.active {
+    display: block;
+}
+
+.lyrics {
+    color: #f0f0f0;
+    font-size: 1rem;
+    line-height: 1.8;
+    white-space: pre-wrap;
+}
+
+.original-lyrics {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.1rem;
+}
+
+/* ==============================
+   TYPOGRAPHY
+   ============================== */
+
+h2 {
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+                 0 0 20px var(--primary-color);
+    animation: titleGlow 2s ease-in-out infinite;
+}
+
+h3 {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+
+/* ==============================
+   ANIMATIONS
+   ============================== */
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes shine {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes titlePulse {
+    0%, 100% { 
+        transform: scale(1);
+        text-shadow: 
+            0 0 20px rgba(255, 255, 255, 0.5),
+            0 0 40px var(--primary-color);
+    }
+    50% { 
+        transform: scale(1.02);
+        text-shadow: 
+            0 0 30px rgba(255, 255, 255, 0.8),
+            0 0 60px var(--primary-color),
+            0 0 100px var(--secondary-color);
+    }
+}
+
+@keyframes subtitleFade {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+@keyframes titleGlow {
+    0%, 100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+    50% { text-shadow: 0 0 20px var(--primary-color); }
+}
+
+@keyframes borderGlow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.content-section {
+    animation: fadeIn 0.5s ease-out;
+}
+
+
+/* ==============================
+   RESPONSIVE DESIGN
+   ============================== */
+
+@media (max-width: 768px) {
+    .hero-header h2 { font-size: 2rem; }
+    .hero-header h3 { font-size: 1rem; }
+    .btn-back { padding: 10px 20px; font-size: 0.875rem; }
+    .main-container { padding: 1.5rem; }
+    .track-image { max-width: 100%; }
+    .lyrics { font-size: 0.9rem; }
+}
+
+@media (max-width: 480px) {
+    .hero-header h2 { font-size: 1.75rem; }
+    .hero-header h3 { font-size: 0.875rem; }
+    .btn-back { padding: 8px 16px; font-size: 0.75rem; }
+    .main-container { padding: 1rem; }
+    .lyrics { font-size: 0.8rem; }
+}

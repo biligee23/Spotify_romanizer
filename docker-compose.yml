@@ -1,0 +1,87 @@
+services:
+  web:
+    build: .
+    # Use 'container_name' for easier identification in Docker Desktop and logs
+    container_name: spotify_romanizer_web
+    ports:
+      - "${WEB_PORT:-5000}:5000"
+    # Mount your local code into the container for development
+    # This allows changes in your local files to reflect immediately in the container (with Flask's debug mode)
+    volumes:
+      - .:/app
+    # Set environment variables from your .env file
+    env_file:
+      - .env
+    # Ensure the web service starts only after redis is ready
+    depends_on:
+      redis:
+        condition: service_healthy # Wait for Redis to be healthy before starting
+    # Command to run your Flask app (assuming 'src/app.py' is the entry point)
+    command: python src/app.py
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+    restart: unless-stopped
+    develop:
+      watch:
+        - path: ./src
+          target: /app/src
+          action: sync
+        - path: ./requirements.txt
+          target: /app/requirements.txt
+          action: rebuild
+
+  # NEW: Celery worker service
+  worker:
+    build: .
+    container_name: spotify_romanizer_worker
+    # The command to start a Celery worker.
+    # -A src.celery_worker:celery_app points to the Celery app instance.
+    # -l info sets the logging level.
+    command: celery -A src.celery_worker.celery_app worker -l info
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      redis:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+    restart: unless-stopped
+    develop:
+      watch:
+        - path: ./src
+          target: /app/src
+          action: sync
+        - path: ./requirements.txt
+          target: /app/requirements.txt
+          action: rebuild
+
+  redis:
+    image: "redis:7-alpine"
+    container_name: spotify_romanizer_redis
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - "6379:6379" # Expose Redis port to host if you want to connect directly
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+      - redis_data:/data # Persist Redis data
+    # Health check for Redis (used by 'depends_on' in 'web' service)
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  redis_data: # Define the named volume for Redis data persistence

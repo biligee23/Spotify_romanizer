@@ -1,0 +1,49 @@
+# --- Python & Virtual Environments ---
+# Virtual Environments
+venv/
+.venv/
+env/
+__pypackages__/
+
+# Compiled Python files
+*.py[cod]
+__pycache__/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# --- Application Specific ---
+# Ignore the instance folder, used for local configs/DBs
+instance/
+
+# Ignore the Flask-Session file-based session storage
+flask_session/
+
+# --- Secrets ---
+# CRITICAL: Ignore the .env file containing secret keys.
+# Only the .env.template file should be committed.
+.env
+
+# --- Editor & OS Files ---
+# VS Code
+.vscode/
+*.code-workspace
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# --- Test & Coverage Reports ---
+.pytest_cache/
+.coverage
+htmlcov/
+
+# --- Other ---
+# Celery runtime files
+celerybeat-schedule
+celerybeat.pid

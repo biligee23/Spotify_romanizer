@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ artist_info.name }} - Top Tracks</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js" defer></script>
+</head>
+<body class="dynamic-bg">
+    <div id="notification-container"></div>
+    <div class="container-fluid px-0">
+        <a href="{{ url_for('main.search') }}" class="logout-btn">Back to Search</a>
+
+        <header class="entity-header" style="background-image: url('{{ artist_info.image_url }}');">
+            <div class="entity-header-overlay">
+                <div class="container entity-header-content">
+                    <img src="{{ artist_info.image_url }}" alt="Image of {{ artist_info.name }}" class="entity-image-main">
+                    <div class="entity-info">
+                        <h1 class="entity-title">{{ artist_info.name }}</h1>
+                        {% if artist_info.genres %}
+                        <p class="artist-genres">
+                            {% for genre in artist_info.genres %}
+                            <span class="genre-tag">{{ genre }}</span>
+                            {% endfor %}
+                        </p>
+                        {% endif %}
+                        <!-- NEW: Button to open the albums modal -->
+                        <div class="playlist-page-actions mt-3">
+                            <button id="btn-view-albums" class="btn-create-playlist" data-url="{{ url_for('main.api_get_artist_albums', artist_id=artist_info.id) }}">
+                                <i class="fa-solid fa-compact-disc me-2"></i>
+                                View Albums
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <main class="container themed-background">
+            <div class="top-tracks-container mt-4">
+                <h3 class="section-heading section-heading-lg-margin">Top Tracks</h3>
+                {% if top_tracks %}
+                <div class="list-group">
+                    {% for track in top_tracks %}
+                    <a href="{{ url_for('main.track_details', track_id=track.track_id) }}" 
+                       class="list-group-item list-group-item-action d-flex align-items-center">
+                        <div class="track-number">{{ loop.index }}</div>
+                        <img src="{{ track.image_url_sm }}" alt="Album art for {{ track.title }}" class="search-result-img me-3">
+                        <div class="flex-grow-1">
+                            <h5 class="mb-1">{{ track.title }}</h5>
+                            <p class="mb-0 text-muted">{{ track.artist }}</p>
+                        </div>
+                        <span class="play-icon" aria-hidden="true">►</span>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-center">No top tracks found for this artist.</p>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+
+    <!-- NEW: Modal for displaying artist's albums -->
+    <div id="albums-modal" class="modal-backdrop" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="albums-modal-title">Albums by {{ artist_info.name }}</h4>
+                <span class="modal-close" id="albums-modal-close">×</span>
+            </div>
+            <div class="modal-body">
+                <div id="modal-album-grid" class="playlist-grid">
+                    <!-- Spinner will be shown here while loading -->
+                    <div class="modal-spinner"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <img src="{{ artist_info.image_url }}" id="color-thief-img" style="display: none;" crossorigin="anonymous">
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/entity_page.js') }}"></script>
+    <!-- NEW: Script to handle the artist page specific logic -->
+    <script src="{{ url_for('static', filename='js/artist_page.js') }}"></script>
+</body>
+</html>
