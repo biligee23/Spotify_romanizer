@@ -140,10 +140,9 @@ You should be greeted by the login page. Enjoy the application!
 
 ---
 
-## ⚠️ Known Limitations & Future Ideas
+## ⚠️ Known Limitations
 
 -   **YouTube API Quota:** The application uses the YouTube Data API v3 to find music videos. The default daily quota provided by Google for a new project is **10,000 units**. Each search query costs **100 units**. This means the application can perform approximately **100 searches for uncached songs per day**. Once this limit is reached, new YouTube videos will not be found until the quota resets at midnight PST. This limitation is a primary reason for the robust caching system and the "Bulk Cache Priming" feature.
--   **Future Enhancements:** A potential future improvement would be to integrate Spotify's Audio Analysis API to display features like Danceability, Energy, and Tempo, and allow users to sort their playlists by these metrics.
 
 ---
 
