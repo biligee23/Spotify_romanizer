@@ -1,71 +1,70 @@
-# Spotify Romanizer 🎵
+<div align="center">
+  <h1>🎵 Spotify Romanizer 🎵</h1>
+  <p>
+    <strong>Your personal gateway to understanding and enjoying Japanese music.</strong>
+  </p>
+  <p>
+    Instantly fetch and view Original Japanese, Romanized (Romaji), and English Translated lyrics for any song on Spotify.
+  </p>
+  <br>
+  <p>
+    <a href="https://creativecommons.org/publicdomain/zero/1.0/">
+      <img src="https://licensebuttons.net/p/zero/1.0/88x31.png" alt="CC0" />
+    </a>
+  </p>
+</div>
 
-**Spotify Romanizer** is a sophisticated, full-featured web application built with a robust Python, Flask, and Celery backend. It provides users with instant access to original Japanese, Romanized (Romaji), and English translated lyrics for any song on Spotify.
+---
 
-The application features a dynamic, SPA-like interface that feels fast and responsive, leveraging background task processing for slow operations and a self-healing cache to ensure data is always fresh and complete. It's more than just a lyrics viewer; it's a powerful tool for managing and exploring your music library in new ways.
+### 🎬 Live Demo & Showcase
 
-### 🎬 Live Demo
+A picture is worth a thousand words, and a video is worth a million. Watch the full demonstration of Spotify Romanizer's features on YouTube.
 
 [![Spotify Romanizer Demo](https://img.youtube.com/vi/your-youtube-video-id/0.jpg)](https://www.youtube.com/watch?v=your-youtube-video-id)
-*(Click the image above to watch a full video demonstration of the application)*
+*(Click the image above to watch the full video demo)*
 
 ---
 
-## ✨ Features Showcase
+## ✨ What is Spotify Romanizer?
 
-### Core Experience: Instant Lyrics & Dynamic UI
+Spotify Romanizer is a sophisticated web application designed for music lovers who want to bridge the language gap. It connects securely to your Spotify account and acts as a powerful companion, enhancing your listening experience with multi-format lyrics, advanced playlist management, and a dynamic, modern user interface.
 
-The core of the application is designed to be fast, intuitive, and visually engaging. Pages load instantly with a polished skeleton UI, and content populates seamlessly as it's fetched by background workers.
-
-![Main Demo GIF](assets/demo-main.gif)
-
-| Feature                 | Description                                                                                                                                                           |
-| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Triple-View Lyrics**  | Instantly switch between **Original Japanese**, **Romanized (Romaji)**, and **English** translated lyrics.                                                              |
-| **Intelligent Fetching**| A smart algorithm finds the correct original Japanese lyrics on Genius, automatically filtering out romanized or translated versions.                                 |
-| **Embedded Video**      | An official music video from YouTube is embedded directly on the track page for a complete audio-visual experience.                                                     |
-| **Dynamic Theming**     | The page background and header dynamically adapt to the dominant colors of the album or artist artwork, creating a unique and immersive theme for every page.           |
+The entire application is built with a focus on performance and user experience, leveraging a robust asynchronous backend to ensure that interactions are fast, smooth, and seamless.
 
 ---
 
-### Advanced Playlist & Library Management
+## 🚀 Core Features
 
-Spotify Romanizer is also a powerful tool for organizing your music. All actions happen in real-time without page reloads, providing a smooth and modern user experience.
+### 🎤 Lyrics & Translation
+- **Triple-View Lyrics:** Instantly switch between **Original Japanese**, **Romanized (Romaji)**, and **English** translated lyrics in a clean, tabbed interface.
+- **Intelligent Lyric Fetching:** A smart algorithm finds the correct original Japanese lyrics on Genius by prioritizing the shortest, most relevant song titles, automatically filtering out derivative versions.
+- **Embedded Music Video:** An official music video from YouTube is embedded directly on the track page for a complete audio-visual experience.
 
-<table>
-  <tr>
-    <td width="50%">
-      <center><strong>Drag & Drop Reordering</strong></center>
-      <img src="assets/demo-playlist-management.gif" alt="Playlist Management Demo" width="100%">
-    </td>
-    <td width="50%">
-      <center><strong>Seamless Bulk Actions</strong></center>
-      <img src="assets/demo-bulk-actions.gif" alt="Bulk Actions Demo" width="100%">
-    </td>
-  </tr>
-</table>
+### 🎨 Dynamic & Responsive User Experience
+- **Asynchronous Skeleton Loading:** Pages load instantly with a polished "skeleton" UI. The lyrics, video, and translation then populate seamlessly as the data is fetched by background Celery workers.
+- **Real-Time UI Updates:** All major actions—favoriting a song, adding to a playlist, reordering tracks—happen instantly on the page without requiring a full refresh, creating a smooth, modern SPA-like feel.
+- **Dynamic Theming:** The track and artist pages feature a beautiful, dynamic background gradient that is generated from the dominant colors of the album or artist artwork.
+- **Polished Hover Effects:** Album art comes to life with a stylish, theme-aware "duotone" hover effect.
 
-| Feature                     | Description                                                                                                                                                                                          |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Drag & Drop Reordering**  | **Tracks:** Reorder tracks within a playlist, and the changes are instantly saved to your Spotify account. <br> **Playlists:** Create a custom, persistent order for your main playlist view inside the app. |
-| **Bulk Actions**            | Select multiple songs from your library and favorite, unfavorite, or add them to a playlist all at once.                                                                                             |
-| **Personalized Library**    | Every song you view is added to your library, which is intelligently separated into a permanent **Favorites** list and a temporary **History** list, managed by an LFU caching policy.                 |
-| **Duplicate-Free Adding**   | When adding songs to an existing playlist, the app automatically detects and skips any tracks that are already present, keeping your playlists clean.                                                |
-| **Asynchronous Creation**   | New playlists are created in the background by a Celery worker, so your UI is never blocked, even when adding a large number of songs.                                                              |
+### 📚 Personalized Music Library & Management
+- **Favorites & History:** Every song you view is automatically added to your personal library, which is intelligently separated into a permanent "Favorites" list and a temporary "History" list, managed by an LFU caching policy.
+- **Self-Healing Cache:** If a background task fails (e.g., a translation), the app will automatically re-trigger the task the next time you visit the page, ensuring your data eventually becomes complete.
+- **Bulk Actions:** Select multiple songs at once to favorite, unfavorite, or add them to a playlist in a single, efficient action.
 
----
-
-### Power-User Features: Bulk Cache Priming
-
-For users who want the fastest possible experience, the entire lyrical content of a playlist can be pre-loaded and cached in the background.
-
-![Cache Priming Screenshot](assets/demo-cache-priming.png)
-
-A live progress bar provides clear feedback on the status of the bulk operation. This ensures that when you navigate to the songs later, the data loads instantly from the cache. The system is smart enough to skip any tracks that are already cached.
+### 🎶 Advanced Playlist Tools
+- **Full Playlist Management:** View, rename, and delete your Spotify playlists directly from the app.
+- **Duplicate-Free Adding:** When adding songs to an existing playlist, the app automatically detects and skips any tracks that are already present.
+- **Asynchronous Creation:** New playlists are created in the background, so your UI is never blocked.
+- **Drag-and-Drop Reordering:**
+    - **Tracks:** Reorder tracks within a playlist, and the changes are instantly saved to your Spotify account.
+    - **Playlists:** Create a custom, persistent order for your main playlist view inside the app.
+- **Bulk Cache Priming:** Pre-load all the lyrics for an entire playlist with a single click, with a live progress bar to track the status.
 
 ---
 
 ## 🛠️ Tech Stack & Architecture
+
+This project is fully containerized with Docker and designed with a modern, scalable architecture.
 
 -   **Backend:** Python, Flask
 -   **Asynchronous Tasks:** Celery with a Redis message broker
@@ -73,8 +72,6 @@ A live progress bar provides clear feedback on the status of the bulk operation.
 -   **Frontend:** Vanilla JavaScript (ES6+), HTML5, CSS3
 -   **APIs:** Spotify API, Genius API (via `lyricsgenius`), YouTube Data API
 -   **Containerization:** Docker, Docker Compose
-
-The application is architected with a clean separation of concerns, using a service-oriented pattern on the back-end and a modular, event-driven approach on the front-end. The use of Celery workers to offload all slow network requests ensures the main Flask application remains lightweight and highly responsive.
 
 ---
 
@@ -84,7 +81,7 @@ This project is fully containerized, making local setup incredibly simple and co
 
 ### Prerequisites
 
--   [Docker](https://www.docker.com/products/docker-desktop/) & Docker Compose (usually included with Docker Desktop)
+-   [Docker](https://www.docker.com/products/docker-desktop/) & Docker Compose
 -   Git
 
 ### Setup Instructions
@@ -110,11 +107,10 @@ The application requires API keys from Spotify, Genius, and YouTube. A template 
 
 **3. Build and Run with Docker Compose**
 
-This single command will build the Docker images for the web server and the Celery worker, start the Redis container, and run the entire application stack.
+This single command will build the Docker images, start the containers, and run the entire application stack.
 
 ```bash
-docker-compose up --build
-```
+docker-compose up --build```
 
 -   The `--build` flag is only needed the first time or after changing dependencies. For subsequent runs, you can just use `docker-compose up`.
 -   You will see logs from three services (`web`, `worker`, `redis`) in your terminal. Wait until they are all running and stable.
@@ -132,4 +128,25 @@ You should be greeted by the Spotify Romanizer login page. Enjoy!
 To stop all the running containers, press `Ctrl+C` in the terminal where `docker-compose` is running. To remove the containers and network entirely, run:
 
 ```bash
-docker-compose down```
+docker-compose down
+```
+
+---
+
+## 🙏 Acknowledgements
+
+This project would not be possible without the incredible services and APIs provided by the following platforms:
+
+-   **[Spotify](https://spotify.com)** for their comprehensive Web API that provides all the core music data.
+-   **[Genius](https://genius.com)** for their vast, user-contributed library of song lyrics.
+-   **[YouTube](https://youtube.com)** for providing music videos and audio streams.
+
+---
+
+## 📜 License
+
+This project is dedicated to the public domain under the **CC0 1.0 Universal** license.
+
+[![CC0](https://licensebuttons.net/p/zero/1.0/88x31.png)](https://creativecommons.org/publicdomain/zero/1.0/)
+
+You are free to use, modify, distribute, and build upon this work for any purpose, including commercial, without any restrictions. See the [LICENSE](LICENSE) file for more details.
