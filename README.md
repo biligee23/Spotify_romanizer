@@ -42,7 +42,7 @@ The entire application is built with a focus on performance and user experience,
 
 ### 🎨 Dynamic & Responsive User Experience
 - **Asynchronous Skeleton Loading:** Pages load instantly with a polished "skeleton" UI. The lyrics, video, and translation then populate seamlessly as the data is fetched by background Celery workers. **([Read the technical deep dive »](docs/ASYNC_LOADING_README.md))**
-- **Real-Time UI Updates:** All major actions—favoriting a song, adding to a playlist, reordering tracks—happen instantly on the page without requiring a full page reloads, creating a smooth, modern SPA-like feel.
+- **Real-Time UI Updates:** All major actions (favoriting a song, adding to a playlist, reordering tracks) happen instantly on the page without requiring a full page reloads, creating a smooth, modern SPA-like feel.
 - **Dynamic Theming:** The track and artist pages feature a beautiful, dynamic background gradient that is generated from the dominant colors of the album or artist artwork.
 - **Polished Hover Effects:** Album art comes to life with a stylish, theme-aware "duotone" hover effect.
 
