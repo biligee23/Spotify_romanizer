@@ -18,9 +18,9 @@
 
 ### 🎬 Live Demo & Showcase
 
-A picture is worth a thousand words, and a video is worth a million. Watch the full demonstration of Spotify Romanizer's features on YouTube.
+Watch the full demonstration of Spotify Romanizer's features on YouTube.
 
-[![Spotify Romanizer Demo](https://img.youtube.com/vi/your-youtube-video-id/0.jpg)](https://www.youtube.com/watch?v=your-youtube-video-id)
+[![Spotify Romanizer Demo](https://img.youtube.com/vi/your-youtube-video-id/0.jpg)](https://youtu.be/cyVqgCFs3vM)
 *(Click the image above to watch the full video demo)*
 
 ---
