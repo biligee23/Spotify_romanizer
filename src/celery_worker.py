@@ -4,21 +4,11 @@ Celery Worker Module
 This module defines the background tasks that the application can offload
 to a separate worker process. It imports the shared Celery app instance.
 """
-# Standard library imports
 import logging
-
-# Third-party imports
 from deep_translator import GoogleTranslator
-
-# Local application imports
 from src.extensions import celery_app
-from src.utils.text_processors import (
-    clean_genius_metadata,
-    format_processed_text,
-    romanize_lyrics,
-)
+from src.utils.text_processors import format_processed_text, clean_genius_metadata, romanize_lyrics
 
-# Initialize logger for the worker
 logger = logging.getLogger(__name__)
 
 
@@ -26,11 +16,10 @@ logger = logging.getLogger(__name__)
 def fetch_and_populate_task(self, job_id, track_id, song_title, artist_name):
     """
     Primary background task to fetch Genius lyrics content for a track.
+    Imports are done inside the task to ensure app context is available.
     """
     from src.app import create_app
-    
     flask_app = create_app()
-    
     with flask_app.app_context():
         from src.extensions import cache
         from src.services.genius_services import get_genius_client
@@ -100,9 +89,7 @@ def fetch_youtube_task(track_id, song_title, artist_name):
     A dedicated Celery task to fetch a YouTube URL and update the cache.
     """
     from src.app import create_app
-    
     flask_app = create_app()
-    
     with flask_app.app_context():
         from src.extensions import cache
         from src.services.youtube_services import search_youtube_video
@@ -134,9 +121,7 @@ def translate_and_update_cache_task(track_id, text_to_translate):
     A Celery task to translate lyrics in the background and update the cache.
     """
     from src.app import create_app
-    
     flask_app = create_app()
-    
     with flask_app.app_context():
         from src.extensions import cache
         from src.utils.cache_manager import lfu_cache_manager
@@ -177,7 +162,6 @@ def create_spotify_playlist_task(token_info, track_ids, playlist_name):
     from spotipy import Spotify
     
     flask_app = create_app()
-
     with flask_app.app_context():
         try:
             sp = Spotify(auth=token_info['access_token'])

@@ -7,17 +7,16 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
-    <!-- NEW: Include SortableJS library -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <style>
-        /* NEW: Basic styling for drag-and-drop UI feedback */
         .sortable-ghost {
             opacity: 0.4;
             background-color: rgba(var(--primary-color-rgb), 0.2);
         }
         .playlist-card {
-            cursor: grab; /* Indicate that items are draggable */
+            cursor: grab;
         }
     </style>
 </head>
@@ -28,16 +27,14 @@
 
         <header class="site-header">
             <div class="container text-center">
-                <h1 class="site-title">My Playlists</h1>
-                <p class="site-subtitle">Select a playlist to view its tracks. Drag to reorder.</p>
-            </div>
+                <h1 class="site-title">My Playlists</h2>
+                <p class="site-subtitle">Select a playlist to view its tracks</p>
+            </div>            </div>
         </header>
         
         <main class="container">
-            <!-- NEW: Added data-save-url for the JS to use -->
             <div class="playlist-grid" id="playlist-grid" data-save-url="{{ url_for('main.save_playlist_order') }}">
                 {% for playlist in playlists %}
-                <!-- NEW: Added data-playlist-id to each card -->
                 <a href="{{ url_for('main.playlist_details', playlist_id=playlist.id) }}" 
                    class="playlist-card" 
                    id="playlist-{{ playlist.id }}"
@@ -51,12 +48,17 @@
                         <p class="playlist-card-info">{{ playlist.total_tracks }} tracks</p>
                     </div>
                     <div class="playlist-card-actions">
-                        <button class="btn-edit-playlist" data-playlist-id="{{ playlist.id }}" title="Rename Playlist" data-role="child-link">✏️</button>
-                        <button class="btn-delete-playlist" data-playlist-id="{{ playlist.id }}" title="Delete Playlist" data-role="child-link">×</button>
+                        <!-- UPDATED: Added aria-label for accessibility -->
+                        <button class="btn-edit-playlist" data-playlist-id="{{ playlist.id }}" title="Rename Playlist" aria-label="Rename playlist {{ playlist.name }}" data-role="child-link">✏️</button>
+                        <button class="btn-delete-playlist" data-playlist-id="{{ playlist.id }}" title="Delete Playlist" aria-label="Delete playlist {{ playlist.name }}" data-role="child-link">×</button>
                     </div>
                 </a>
                 {% else %}
-                <p class="text-center w-100">No playlists found for your account.</p>
+                <div class="empty-state-container w-100">
+                    <i class="fa-solid fa-music empty-state-icon"></i>
+                    <h4 class="empty-state-title">No Playlists Found</h4>
+                    <p class="empty-state-text">Your Spotify playlists will appear here once you create them.</p>
+                </div>
                 {% endfor %}
             </div>
         </main>
@@ -64,7 +66,6 @@
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='js/playlists_page.js') }}"></script>
-    <!-- NEW: Include the reordering script for playlists -->
     <script src="{{ url_for('static', filename='js/playlist_reorder.js') }}"></script>
 </body>
 </html>

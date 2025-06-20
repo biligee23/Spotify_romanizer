@@ -31,16 +31,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function addSearchToHistory(query) {
     let history = getSearchHistory();
-    // CORRECTED: Perform a case-insensitive filter to correctly remove duplicates.
     const lowerCaseQuery = query.toLowerCase();
     history = history.filter((item) => item.toLowerCase() !== lowerCaseQuery);
-
-    // Add the new query (preserving its original case) to the beginning.
     history.unshift(query);
-
-    // Enforce the maximum number of history items.
     history = history.slice(0, MAX_HISTORY_ITEMS);
-
     localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
   }
 
@@ -231,20 +225,36 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  /**
+   * Checks a list and adds or removes the enhanced empty state message as needed.
+   * @param {HTMLElement} listElement The list element to check (e.g., favoritesList).
+   */
   function updateEmptyListMessages(listElement) {
     if (!listElement) return;
 
     const isEmpty = !listElement.querySelector(".recently-viewed-item");
-    const emptyMessage = listElement.querySelector(".empty-list-message");
+    const emptyMessage = listElement.querySelector(".empty-state-container");
 
     if (isEmpty && !emptyMessage) {
-      const p = document.createElement("p");
-      p.className = "text-center empty-list-message";
-      p.textContent =
-        listElement.id === "favorites-list"
-          ? "Your favorite songs will appear here."
-          : "Your recently viewed songs will appear here.";
-      listElement.appendChild(p);
+      const isFavorites = listElement.id === "favorites-list";
+      const iconClass = isFavorites
+        ? "fa-regular fa-star"
+        : "fa-solid fa-clock-rotate-left";
+      const title = isFavorites
+        ? "No Favorite Songs Yet"
+        : "Your History is Empty";
+      const text = isFavorites
+        ? "Click the star icon on any song in your history to add it here."
+        : "Search for a song and view its details to start building your history.";
+
+      const emptyStateHTML = `
+        <div class="empty-state-container">
+            <i class="${iconClass} empty-state-icon"></i>
+            <h4 class="empty-state-title">${title}</h4>
+            <p class="empty-state-text">${text}</p>
+        </div>
+      `;
+      listElement.innerHTML = emptyStateHTML;
     } else if (!isEmpty && emptyMessage) {
       emptyMessage.remove();
     }

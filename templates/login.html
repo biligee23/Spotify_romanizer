@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Spotify Romanizer</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
@@ -19,26 +20,38 @@
             <p class="subtitle">Instantly get Romanized, Original, and Translated lyrics for your favorite Japanese songs on Spotify.</p>
             
             <div class="features">
-                <div class="feature-item">🔎 Search for any song</div>
-                <div class="feature-item">🇯🇵 Get accurate Romaji</div>
-                <div class="feature-item">🇬🇧 View English translations</div>
-                <div class="feature-item">➕ Manage your playlists</div>
+                <!-- Primary Features -->
+                <div class="feature-item"><i class="fa-solid fa-music"></i> Triple-View Lyrics</div>
+                <div class="feature-item"><i class="fa-solid fa-list-check"></i> Playlist Management</div>
+                <div class="feature-item"><i class="fa-solid fa-star"></i> Favorites & History</div>
+                <div class="feature-item"><i class="fa-solid fa-bolt"></i> Asynchronous Loading</div>
+                
+                <div id="advanced-features" class="features-advanced">
+                    <div class="feature-item"><i class="fa-solid fa-hand-pointer"></i> Drag & Drop Reordering</div>
+                    <div class="feature-item"><i class="fa-solid fa-layer-group"></i> Bulk Actions</div>
+                    <div class="feature-item"><i class="fa-solid fa-cloud-arrow-down"></i> Playlist Cache Priming</div>
+                    <div class="feature-item"><i class="fa-solid fa-wand-magic-sparkles"></i> Dynamic Theming</div>
+                </div>
             </div>
 
+            <button id="btn-toggle-features" class="btn-toggle-features">
+                <span class="btn-text">Show More Features</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            
             <a href="{{ url_for('main.login') }}" class="login-button">
-                <img src="{{ url_for('static', filename='img/spotify_logo.png') }}" alt="Spotify Logo" class="spotify-logo">
+                <!-- UPDATED: Replaced <img> with a Font Awesome icon -->
+                <i class="fa-brands fa-spotify"></i>
                 Login with Spotify
             </a>
 
             <div class="demo-section">
                 <h3 class="demo-title">See it in Action</h3>
-                <!-- EMBED YOUR YOUTUBE/VIMEO VIDEO HERE -->
-                <!-- Replace the src with your video's embed link -->
                 <div class="video-container">
                     <iframe 
                         width="560" 
                         height="315" 
-                        src="https://www.youtube.com/watch?v=Dbc-m9KesjI" 
+                        src="https://www.youtube.com/embed/Dbc-m9KesjI" 
                         title="YouTube video player" 
                         frameborder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -51,5 +64,30 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('btn-toggle-features');
+            const advancedFeatures = document.getElementById('advanced-features');
+            const btnText = toggleBtn.querySelector('.btn-text');
+            const btnIcon = toggleBtn.querySelector('i');
+
+            toggleBtn.addEventListener('click', function() {
+                const isHidden = advancedFeatures.style.display === 'none' || advancedFeatures.style.display === '';
+                
+                if (isHidden) {
+                    advancedFeatures.style.display = 'flex';
+                    btnText.textContent = 'Show Less';
+                    btnIcon.classList.remove('fa-chevron-down');
+                    btnIcon.classList.add('fa-chevron-up');
+                } else {
+                    advancedFeatures.style.display = 'none';
+                    btnText.textContent = 'Show More Features';
+                    btnIcon.classList.remove('fa-chevron-up');
+                    btnIcon.classList.add('fa-chevron-down');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

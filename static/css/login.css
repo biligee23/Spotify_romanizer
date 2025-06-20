@@ -78,7 +78,7 @@ body::before {
     justify-content: center;
     gap: 1rem;
     flex-wrap: wrap;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1rem;
 }
 
 .feature-item {
@@ -87,10 +87,51 @@ body::before {
     border-radius: 20px;
     font-size: 0.9rem;
     font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+}
+
+.feature-item i {
+    margin-right: 0.5rem;
+    color: var(--secondary-color);
+}
+
+.features-advanced {
+    display: none;
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.btn-toggle-features {
+    background: none;
+    border: none;
+    color: var(--text-dark);
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    /* UPDATED: Add margin-bottom to create space */
+    margin-bottom: 1.5rem;
+}
+
+.btn-toggle-features:hover {
+    color: var(--text-light);
+}
+
+.btn-toggle-features i {
+    transition: transform 0.3s ease;
 }
 
 .login-button {
-    display: inline-flex;
+    /* UPDATED: Change to flex and set auto margin for centering */
+    display: flex;
+    width: fit-content; /* Ensure button width is based on content */
+    margin: 0 auto; /* Center the block-level element */
     align-items: center;
     gap: 0.75rem;
     background-color: var(--primary-color);
@@ -110,9 +151,8 @@ body::before {
     background-color: var(--secondary-color);
 }
 
-.spotify-logo {
-    width: 24px;
-    height: 24px;
+.login-button i {
+    font-size: 1.5rem;
 }
 
 .demo-section {
@@ -216,4 +256,5 @@ body::before {
     .subtitle { font-size: 1rem; }
     .main-content { padding: 2rem; }
     .features { flex-direction: column; gap: 0.5rem; }
+    .features-advanced { flex-direction: column; gap: 0.5rem; }
 }

@@ -110,6 +110,15 @@ body.dynamic-bg {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+.song-checkbox:focus-visible {
+    outline: 2px solid var(--secondary-color);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(var(--primary-color-rgb), 0.3);
+}
+
 
 /* ==============================
    MODAL STYLES
@@ -242,27 +251,6 @@ body.dynamic-bg {
 }
 .modal-new-playlist .form-control {
     flex-grow: 1;
-}
-.btn-modal-action {
-    background: var(--primary-color);
-    color: #fff;
-    border: none;
-    padding: 0.75rem 1rem;
-    border-radius: 50px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-.btn-modal-action:hover:not(:disabled) {
-    background: var(--secondary-color);
-}
-.btn-modal-action:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-.btn-modal-action .spinner {
-    width: 16px;
-    height: 16px;
 }
 
 .modal-spinner {
@@ -427,6 +415,58 @@ body.dynamic-bg {
 /* ==============================
    BUTTONS AND FORM CONTROLS
    ============================== */
+
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: #000;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--secondary-color);
+}
+
+.btn-secondary {
+    background: rgba(255,255,255,0.1);
+    color: var(--text-light);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: rgba(255,255,255,0.2);
+}
+
+.btn .spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    border-top-color: #000;
+    animation: spin 1s ease-in-out infinite;
+}
 
 .logout-btn, .playlists-btn, .favorites-btn {
     position: fixed;
@@ -610,8 +650,8 @@ body.dynamic-bg {
 }
 
 .playlist-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3), 0 0 20px var(--dynamic-shadow-primary);
 }
 
 .playlist-card-img {
@@ -723,6 +763,44 @@ body.dynamic-bg {
     font-size: 1.2rem;
 }
 
+.section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 1.5rem;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.section-hint {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 0.75rem;
+    opacity: 0.8;
+}
+
+.section-hint i {
+    margin-right: 0.5rem;
+}
+
+.section-divider {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+    margin: 3rem 0;
+}
+
 .segmented-control {
     display: inline-flex;
     background-color: rgba(0,0,0,0.2);
@@ -757,6 +835,8 @@ body.dynamic-bg {
 
 .library-content .list-group {
     display: none;
+    /* NEW: Set a minimum height to prevent layout jump */
+    min-height: 220px;
 }
 .library-content .list-group.active {
     display: block;
@@ -766,42 +846,6 @@ body.dynamic-bg {
     display: flex;
     gap: 0.5rem;
     align-items: center;
-}
-
-.btn-create-playlist, .btn-select-all {
-    background: var(--primary-color);
-    color: #000;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 0.8rem;
-    transition: var(--transition);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-.btn-select-all {
-    background: rgba(255,255,255,0.1);
-    color: var(--text-light);
-}
-
-.btn-create-playlist:hover:not(:disabled), .btn-select-all:hover {
-    background: var(--secondary-color);
-    transform: translateY(-1px);
-}
-
-.btn-create-playlist:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.btn-create-playlist .btn-spinner {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top-color: #fff;
-    animation: spin 1s ease-in-out infinite;
 }
 
 .bulk-action-pill {
@@ -895,8 +939,8 @@ body.dynamic-bg {
     background-color: rgba(36, 36, 62, 0.8);
     border-color: rgba(255, 255, 255, 0.2);
     color: #fff;
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 15px var(--dynamic-shadow-secondary);
 }
 
 .list-group-item-action:hover::before {
@@ -933,8 +977,8 @@ body.dynamic-bg {
 }
 
 .recently-viewed-item:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2), 0 0 10px var(--dynamic-shadow-primary);
     border-color: rgba(255, 255, 255, 0.2);
     background-color: rgba(36, 36, 62, 0.8);
 }
@@ -1178,7 +1222,6 @@ body.dynamic-bg {
     }
 }
 
-/* NEW: Skeleton loader styles */
 @keyframes pulse {
     0% { background-color: rgba(165, 165, 165, 0.1); }
     50% { background-color: rgba(165, 165, 165, 0.2); }
@@ -1187,7 +1230,7 @@ body.dynamic-bg {
 
 .skeleton {
     animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    background-color: #2a2a4a; /* A color that fits the theme */
+    background-color: #2a2a4a;
     border-radius: 8px;
 }
 
@@ -1202,4 +1245,31 @@ body.dynamic-bg {
 
 .skeleton-block {
     border-radius: 15px;
+}
+
+.empty-state-container {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-muted);
+    border: 2px dashed rgba(255,255,255,0.1);
+    border-radius: 15px;
+    margin-top: 1rem;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 1rem;
+}
+
+.empty-state-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.empty-state-text {
+    max-width: 400px;
+    margin: 0 auto;
 }

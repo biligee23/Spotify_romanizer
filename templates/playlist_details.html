@@ -33,7 +33,6 @@
         }
     </style>
 </head>
-<!-- UPDATED: The body class logic remains, controlling the initial background -->
 <body class="{{ 'dynamic-bg' if playlist_info.image_url and 'mosaic.scdn.co' not in playlist_info.image_url else '' }}">
     <div id="notification-container"></div>
     <div class="container-fluid px-0">
@@ -50,7 +49,8 @@
                         <p class="album-meta-info">{{ playlist_info.description | safe }}</p>
                         {% endif %}
                         <div class="playlist-page-actions mt-3">
-                            <button id="btn-prime-cache" class="btn-create-playlist" data-url="{{ url_for('main.prime_playlist_cache', playlist_id=playlist_info.id) }}">
+                            <!-- UPDATED: Using the new standardized button classes -->
+                            <button id="btn-prime-cache" class="btn btn-primary" data-url="{{ url_for('main.prime_playlist_cache', playlist_id=playlist_info.id) }}">
                                 <i class="fa-solid fa-cloud-arrow-down me-2"></i>
                                 <span class="btn-text">Pre-load All Lyrics</span>
                                 <span class="spinner" style="display: none;"></span>
@@ -83,7 +83,8 @@
                         <button class="btn-remove-from-playlist" 
                                 data-playlist-id="{{ playlist_info.id }}" 
                                 data-track-id="{{ track.track_id }}" 
-                                title="Remove from this playlist">×</button>
+                                title="Remove from this playlist"
+                                aria-label="Remove {{ track.title }} from this playlist">×</button>
                     </div>
                     {% endfor %}
                 </div>
@@ -91,7 +92,6 @@
         </main>
     </div>
 
-    <!-- UPDATED: The img tag is now always rendered. Its src is empty if it's a mosaic. -->
     <img src="{{ playlist_info.image_url if 'mosaic.scdn.co' not in playlist_info.image_url else '' }}" 
          id="color-thief-img" 
          style="display: none;" 

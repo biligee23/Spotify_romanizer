@@ -39,12 +39,13 @@
                         </button>
                     </div>
                 </form>
-                <!-- NEW: Container for the search history dropdown -->
                 <div id="search-history-dropdown" class="search-history-dropdown"></div>
             </div>
 
             <!-- Container for dynamically loaded search results -->
             <div id="search-results-container" class="search-results mt-4"></div>
+
+            <hr class="section-divider">
 
             <!-- History & Favorites Container -->
             <div class="history-container mt-5">
@@ -52,15 +53,16 @@
                     <h3 class="section-heading">Your Library</h3>
                     <div class="playlist-actions">
                         <div id="bulk-action-pill" class="bulk-action-pill disabled">
-                            <button id="btn-bulk-favorite" class="pill-half" title="Favorite Selected" disabled>
+                            <button id="btn-bulk-favorite" class="pill-half" title="Favorite Selected" aria-label="Favorite all selected songs" disabled>
                                 <i class="fa-solid fa-star"></i>
                             </button>
-                            <button id="btn-bulk-unfavorite" class="pill-half" title="Unfavorite Selected" disabled>
+                            <button id="btn-bulk-unfavorite" class="pill-half" title="Unfavorite Selected" aria-label="Unfavorite all selected songs" disabled>
                                 <i class="fa-regular fa-star"></i>
                             </button>
                         </div>
-                        <button id="btn-add-to-playlist" class="btn-create-playlist" disabled>Add to Playlist</button>
-                        <button id="btn-select-all-global" class="btn-select-all">Select All</button>
+                        <!-- UPDATED: Using the new standardized button classes -->
+                        <button id="btn-add-to-playlist" class="btn btn-primary" disabled>Add to Playlist</button>
+                        <button id="btn-select-all-global" class="btn btn-secondary">Select All</button>
                     </div>
                 </div>
 
@@ -73,29 +75,33 @@
 
                 <!-- Content Panes -->
                 <div class="library-content">
-                    {% if favorites %}
                     <div class="list-group active" id="favorites-list">
-                        {% for song in favorites %}
-                        {% include 'partials/song_item.html' %}
-                        {% endfor %}
+                        {% if favorites %}
+                            {% for song in favorites %}
+                                {% include 'partials/song_item.html' %}
+                            {% endfor %}
+                        {% else %}
+                            <div class="empty-state-container">
+                                <i class="fa-regular fa-star empty-state-icon"></i>
+                                <h4 class="empty-state-title">No Favorite Songs Yet</h4>
+                                <p class="empty-state-text">Click the star icon on any song in your history to add it here.</p>
+                            </div>
+                        {% endif %}
                     </div>
-                    {% else %}
-                    <div class="list-group active" id="favorites-list">
-                        <p class="text-center empty-list-message">Your favorite songs will appear here.</p>
-                    </div>
-                    {% endif %}
 
-                    {% if history %}
                     <div class="list-group" id="history-list" style="display: none;">
-                        {% for song in history %}
-                        {% include 'partials/song_item.html' %}
-                        {% endfor %}
+                        {% if history %}
+                            {% for song in history %}
+                                {% include 'partials/song_item.html' %}
+                            {% endfor %}
+                        {% else %}
+                            <div class="empty-state-container">
+                                <i class="fa-solid fa-clock-rotate-left empty-state-icon"></i>
+                                <h4 class="empty-state-title">Your History is Empty</h4>
+                                <p class="empty-state-text">Search for a song and view its details to start building your history.</p>
+                            </div>
+                        {% endif %}
                     </div>
-                    {% else %}
-                    <div class="list-group" id="history-list" style="display: none;">
-                        <p class="text-center empty-list-message">Your recently viewed songs will appear here.</p>
-                    </div>
-                    {% endif %}
                 </div>
             </div>
         </main>
@@ -116,7 +122,7 @@
                 <div class="modal-divider">OR</div>
                 <div class="modal-new-playlist">
                     <input type="text" id="new-playlist-name" class="form-control" placeholder="Create a new playlist...">
-                    <button id="btn-modal-create" class="btn-modal-action" disabled>
+                    <button id="btn-modal-create" class="btn btn-primary" disabled>
                         <span class="btn-text">Create & Add</span>
                         <span class="spinner" style="display: none;"></span>
                     </button>

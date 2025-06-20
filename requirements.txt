@@ -15,6 +15,7 @@ Flask-Caching>=2.0
 gunicorn>=21.2.0
 eventlet>=0.35.1
 pytest>=8.2.0
+pytest-mock>=3.10.0
 yt-dlp>=2024.4.9
 sudachipy>=0.6.8
 sudachidict-core>=2023.1
