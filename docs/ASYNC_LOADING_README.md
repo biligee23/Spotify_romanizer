@@ -6,53 +6,41 @@ This document provides a technical explanation of the asynchronous data loading 
 
 To provide a modern, high-performance user experience where the user is never blocked by slow network operations. When a user navigates to a track page, the page should appear **instantly**, with the content populating seamlessly as it's fetched from external APIs in the background.
 
-![Main Demo GIF](../assets/demo-main.gif)
-
 ### The Challenge
 
 A single track page requires data from up to three different external APIs (Spotify, Genius, YouTube), plus a translation service. A traditional server-side rendering approach would force the user to wait for all four of these network calls to complete before seeing anything, resulting in a slow and frustrating experience. Furthermore, any one of these external services could fail, potentially crashing the request.
 
 ### The Implementation
 
-The solution is a distributed, asynchronous architecture that decouples the user-facing web server from the slow data-fetching processes.
+<table>
+  <tr>
+    <td width="50%">
+      <center><strong>Instant Skeleton Loading</strong></center>
+      <img src="../assets/demo-main.gif" alt="Asynchronous Loading Demo" width="100%">
+    </td>
+    <td width="50%">
+      <p>The solution is a distributed, asynchronous architecture that decouples the user-facing web server from the slow data-fetching processes. The entire workflow is designed to be resilient and provide immediate feedback to the user.</p>
+      <ol>
+        <li><strong>Instant Skeleton Response:</strong> On a cache miss, the Flask server immediately saves a "skeleton" entry to the cache with placeholder data and renders the page. The UI uses CSS to show pulsing placeholder blocks.</li>
+        <li><strong>Asynchronous Task Dispatch:</strong> In parallel, Flask dispatches a task to a Celery worker to begin fetching the real data, returning control to the user instantly.</li>
+        <li><strong>Front-End Polling:</strong> The user's browser polls a status API endpoint every few seconds, which reads the current state of the data from the cache.</li>
+        <li><strong>Progressive Enhancement:</strong> As the background worker completes its tasks (fetching lyrics, then YouTube URLs, then translations), the polling mechanism detects the new data and updates the UI piece by piece.</li>
+      </ol>
+    </td>
+  </tr>
+</table>
 
-#### 1. The "Skeleton" Response (Flask Route)
+#### The "Self-Healing" Mechanism
 
-- When a user requests `/track/<track_id>`, the Flask route first checks the Redis cache.
-- **On a cache miss**, it does not perform any API calls. Instead, it immediately calls the `create_skeleton_cache_entry` service function.
-- This function creates a dictionary containing all the necessary keys (`original_lyrics`, `youtube_url`, etc.) but fills them with placeholder values like `"Loading..."`.
-- This "skeleton" data is saved to the cache, and the `track_info.html` template is rendered and returned to the user instantly. The template uses Jinja2 logic to display pulsing placeholder blocks (the skeleton UI) when it sees this placeholder data.
+The system is designed to be resilient. If a user visits a track page that is already in the cache but has incomplete data (e.g., a previous translation task failed), the `track_details` route performs a "health check."
 
-#### 2. Asynchronous Task Dispatch (Celery)
+It inspects the cached content. If it finds a field with a "failed" status or a missing value, it re-dispatches *only the specific Celery task* needed to fix that piece of data (e.g., `translate_and_update_cache_task.delay(...)`).
 
-- Immediately after creating the skeleton entry, the Flask route dispatches the main background task to a Celery worker: `fetch_and_populate_task.delay(...)`.
-- This returns control to the web server instantly, which finishes the user's request.
-
-#### 3. Background Data Fetching (Celery Worker)
-
-- A separate Celery worker process, which is always running, picks up the `fetch_and_populate_task` from the Redis message queue.
-- This worker is responsible for performing all the slow, blocking API calls to Genius and YouTube.
-- Once it has the data, it updates the existing cache entry for the track, replacing the "Loading..." placeholders with the real content.
-- It also dispatches chained tasks for translation (`translate_and_update_cache_task`) and other operations, ensuring a clean, sequential workflow.
-
-#### 4. Front-End Polling and UI Updates (JavaScript)
-
-- The `track_info_page.js` script, upon loading, checks the HTML for `data-is-loading` attributes.
-- If any content is marked as loading, it begins polling a status endpoint (`/api/track/status/<track_id>`) every few seconds.
-- This API endpoint simply reads the current state of the track from the Redis cache.
-- As the JavaScript receives updated data from the polling response, it dynamically updates the DOM: it replaces the skeleton placeholders with the real text, injects the YouTube `iframe`, and enables the appropriate lyric tabs.
-- Once all expected content has been loaded, the polling stops.
-
-#### 5. The "Self-Healing" Mechanism
-
-- The system is designed to be resilient. If a user visits a track page that _is_ in the cache but has incomplete data (e.g., a previous translation task failed), the `track_details` route performs a "health check."
-- It inspects the cached data. If it finds a field with a "failed" status or a missing value, it re-dispatches _only the specific Celery task_ needed to fix that piece of data (e.g., `translate_and_update_cache_task.delay(...)`).
-- The front-end polling mechanism then takes over as usual, ensuring that the data will eventually become complete on subsequent visits.
+The page is still rendered instantly with the currently available data, and the front-end polling mechanism seamlessly handles the update once the re-dispatched task completes.
 
 ### The Result
 
-This architecture results in a lightning-fast perceived performance for the user and a highly resilient system that is not dependent on the uptime of its external APIs. It is a standard, professional pattern for building modern, scalable web applications.
+This architecture results in a lightning-fast perceived performance for the user and a highly resilient system that is not dependent on the uptime of its external APIs. It automatically corrects data inconsistencies over time and provides a polished, professional user experience that is standard in modern web applications.
 
 ---
-
 [**« Back to Main README**](../README.md)
