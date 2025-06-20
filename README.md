@@ -18,10 +18,9 @@
 
 ### 🎬 Live Demo & Showcase
 
-A picture is worth a thousand words, and a video is worth a million. Watch the full demonstration of Spotify Romanizer's features on YouTube.
+Watch the full demonstration of Spotify Romanizer's features on YouTube.
 
 [![Spotify Romanizer Demo](/assets/front_page.png)](https://youtu.be/Dbc-m9KesjI)
-*(Click the image above to watch the full video demo)*
 
 ---
 
@@ -68,11 +67,11 @@ The entire application is built with a focus on performance and user experience,
   <tr>
     <td width="50%">
       <center><strong>Seamless Playlist Management</strong></center>
-      <img src="assets/demo-playlist-management.gif" alt="Playlist Management Demo" width="100%">
+      <img src="assets/playlist.gif" alt="Playlist Management Demo" width="100%">
     </td>
     <td width="50%">
       <center><strong>Efficient Bulk Actions</strong></center>
-      <img src="assets/demo-bulk-actions.gif" alt="Bulk Actions Demo" width="100%">
+      <img src="assets/load.gif" alt="Bulk Actions Demo" width="100%">
     </td>
   </tr>
 </table>
