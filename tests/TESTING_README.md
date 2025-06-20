@@ -48,5 +48,5 @@ docker-compose exec web pytest -v
 To run only the tests in a single file, you can specify the path:
 
 ```bash
-docker-compose exec web pytest -v tests/routes/test_api_routes.py
+docker-compose exec web pytest -v tests/test_api_routes.py
 ```
