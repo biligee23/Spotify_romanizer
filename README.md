@@ -40,25 +40,24 @@ The entire application is built with a focus on performance and user experience,
 - **Intelligent Lyric Fetching:** A smart algorithm finds the correct original Japanese lyrics on Genius by prioritizing the shortest, most relevant song titles, automatically filtering out derivative versions.
 - **Embedded Music Video:** An official music video from YouTube is embedded directly on the track page for a complete audio-visual experience.
 
-### 🎨 Dynamic & Responsive User Experience
-- **Asynchronous Skeleton Loading:** Pages load instantly with a polished "skeleton" UI. The lyrics, video, and translation then populate seamlessly as the data is fetched by background Celery workers. **([Read the technical deep dive »](docs/ASYNC_LOADING_README.md))**
+### 🎨 Dynamic & Responsive User Experience **([Read the technical deep dive »](docs/ASYNC_LOADING_README.md))**
+- **Asynchronous Skeleton Loading:** Pages load instantly with a polished "skeleton" UI. The lyrics, video, and translation then populate seamlessly as the data is fetched by background Celery workers. 
 - **Real-Time UI Updates:** All major actions (favoriting a song, adding to a playlist, reordering tracks) happen instantly on the page without requiring a full page reloads, creating a smooth, modern SPA-like feel.
 - **Dynamic Theming:** The track and artist pages feature a beautiful, dynamic background gradient that is generated from the dominant colors of the album or artist artwork.
 - **Polished Hover Effects:** Album art comes to life with a stylish, theme-aware "duotone" hover effect.
 
-### 📚 Personalized Music Library & Management
+### 📚 Personalized Music Library & Management **([Read the technical deep dive »](docs/BULK_ACTIONS_README.md))**
 - **Favorites & History:** Every song you view is automatically added to your personal library, which is intelligently separated into a permanent "Favorites" list and a temporary "History" list, managed by an LFU caching policy.
 - **Self-Healing Cache:** If a background task fails (e.g., a translation), the app will automatically re-trigger the task the next time you visit the page, ensuring your data eventually becomes complete.
-- **Bulk Actions:** Select multiple songs at once to favorite, unfavorite, or add them to a playlist in a single, efficient action. **([Read the technical deep dive »](docs/BULK_ACTIONS_README.md))**
+- **Bulk Actions:** Select multiple songs at once to favorite, unfavorite, or add them to a playlist in a single, efficient action. 
 
-### 🎶 Advanced Playlist Tools
+### 🎶 Advanced Playlist Tools **([Read the technical deep dive »](docs/PLAYLIST_MANAGEMENT_README.md))**
 - **Full Playlist Management:** View, rename, and delete your Spotify playlists directly from the app.
 - **Duplicate-Free Adding:** When adding songs to an existing playlist, the app automatically detects and skips any tracks that are already present.
 - **Asynchronous Creation:** New playlists are created in the background, so your UI is never blocked.
 - **Drag-and-Drop Reordering:**
     - **Tracks:** Reorder tracks within a playlist, and the changes are instantly saved to your Spotify account.
     - **Playlists:** Create a custom, persistent order for your main playlist view inside the app.
-    - **([Read the technical deep dive »](docs/PLAYLIST_MANAGEMENT_README.md))**
 - **Bulk Cache Priming:** Pre-load all the lyrics for an entire playlist with a single click, with a live progress bar to track the status.
 
 ---
