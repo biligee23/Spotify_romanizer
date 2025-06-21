@@ -18,7 +18,7 @@ Implementing drag-and-drop requires careful coordination between the front-end U
 <table>
   <tr>
     <td width="50%">
-      <center><strong>Seamless Drag & Drop</strong></center>
+      <p><strong>Seamless Drag & Drop</strong></p>
       <p></p>
       <img src="../assets/drag_drop.gif" alt="Playlist Management Demo" width="100%">
     </td>
