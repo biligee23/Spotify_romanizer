@@ -20,7 +20,7 @@
 
 Watch the full demonstration of Spotify Romanizer's features on YouTube.
 
-[![Spotify Romanizer Demo](assets/login.png)](https://youtu.be/cyVqgCFs3vM)
+[![Spotify Romanizer Demo](../assets/login.png)](https://youtu.be/cyVqgCFs3vM)
 *(Click the image above to watch the full video demo)*
 
 ---
