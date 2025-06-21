@@ -15,7 +15,8 @@ A single track page requires data from up to three different external APIs (Spot
 <table>
   <tr>
     <td width="50%">
-      <center><strong>Instant Skeleton Loading</strong></center>
+      <p><strong>Instant Skeleton Loading</strong></p>
+      <p>
       <img src="../assets/skeleton_load.gif" alt="Asynchronous Loading Demo" width="100%">
     </td>
     <td width="50%">
