@@ -19,7 +19,7 @@ Implementing drag-and-drop requires careful coordination between the front-end U
   <tr>
     <td width="50%">
       <center><strong>Seamless Drag & Drop</strong></center>
-      <img src="../assets/demo-playlist-management.gif" alt="Playlist Management Demo" width="100%">
+      <img src="../assets/drag_drop.gif" alt="Playlist Management Demo" width="100%">
     </td>
     <td width="50%">
       <p>The entire reordering experience is handled by the <strong>SortableJS</strong> library on the front-end and dedicated API endpoints on the back-end.</p>
