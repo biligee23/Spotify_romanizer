@@ -12,7 +12,7 @@ To empower users to manage large libraries efficiently. Users should be able to 
   <tr>
     <td width="50%">
       <center><strong>Efficient Bulk Actions</strong></center>
-      <img src="../assets/demo-bulk-actions.gif" alt="Bulk Actions Demo" width="100%">
+      <img src="../assets/bulk_actions.gif" alt="Bulk Actions Demo" width="100%">
     </td>
     <td width="50%">
       <p><strong>Bulk Favoriting:</strong> When a user favorites multiple selected songs, the front-end gathers the `cache_key` for each song and sends them as an array to the <code>/api/favorites/add_bulk</code> endpoint. The back-end uses Redis's highly efficient `SADD` command to add all keys to the favorites set in a single operation. The front-end then updates the UI in real-time, moving the items from the "History" to the "Favorites" list without a page reload.</p>
@@ -25,7 +25,7 @@ To empower users to manage large libraries efficiently. Users should be able to 
 
 This feature uses a robust, manually-tracked progress system to provide reliable feedback for a long-running, multi-task operation.
 
-![Cache Priming Screenshot](../assets/demo-cache-priming.png)
+![Cache Priming Screenshot](../assets/cache_prime.gif)
 
 1.  **Initiation:** The user clicks "Pre-load." The back-end API (`/api/playlist/prime_cache`) identifies all uncached tracks, generates a unique `job_id`, and initializes a progress counter in Redis (e.g., `SET priming:job:{job_id} 0`).
 2.  **Dispatch:** It dispatches a `fetch_and_populate_task` for each uncached song, passing the `job_id` to every task.
