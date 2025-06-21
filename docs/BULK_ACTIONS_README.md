@@ -11,7 +11,7 @@ To empower users to manage large libraries efficiently. Users should be able to 
 <table>
   <tr>
     <td width="50%">
-      <center><strong>Efficient Bulk Actions</strong></center>
+      <p><strong>Efficient Bulk Actions</strong></p>
       <p></p>
       <img src="../assets/bulk_actions.gif" alt="Bulk Actions Demo" width="100%">
     </td>
