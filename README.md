@@ -72,7 +72,7 @@ The entire application is built with a focus on performance and user experience,
     </td>
     <td width="50%">
       <center><strong>Efficient Bulk Actions</strong></center>
-      <img src="assets/demo-bulk-actions.gif" alt="Bulk Actions Demo" width="100%">
+      <img src="assets/bulk_actions.gif" alt="Bulk Actions Demo" width="100%">
     </td>
   </tr>
 </table>
