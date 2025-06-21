@@ -16,7 +16,7 @@ A single track page requires data from up to three different external APIs (Spot
   <tr>
     <td width="50%">
       <center><strong>Instant Skeleton Loading</strong></center>
-      <img src="../assets/demo-main.gif" alt="Asynchronous Loading Demo" width="100%">
+      <img src="../assets/skeletons_load.gif" alt="Asynchronous Loading Demo" width="100%">
     </td>
     <td width="50%">
       <p>The solution is a distributed, asynchronous architecture that decouples the user-facing web server from the slow data-fetching processes. The entire workflow is designed to be resilient and provide immediate feedback to the user.</p>
